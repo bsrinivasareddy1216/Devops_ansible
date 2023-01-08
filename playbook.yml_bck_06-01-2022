@@ -3,7 +3,7 @@
 # configuration.
 
 - name: Deploy a web application
-  hosts: tomcat
+  hosts: jenkin,tomcat
   tasks:
     - name: Install all required dependencies
       yum:
@@ -31,12 +31,11 @@
       copy:
         content: |
           [client]
-          user=root
-          password="@targ8et"
+          user=srinu
+          password="Hyd@19959543256"
         dest: "/etc/.my.cnf"
 
-    - name: Start MySQL Service
-      service:
+    - name: Start MySQL Service      service:
         name: mysqld
         state: started
         enabled: yes
@@ -53,11 +52,8 @@
 
     - name: Install required Python libraries
       pip:
-        name: "{{ item }}"
+        name: ['flask', 'flask-mysql']
         state: present
-      with_items:
-        - "flask"
-        - "flask-mysql"
 
     - name: Create Application Database
       mysql_db:
